@@ -58,19 +58,19 @@ namespace RecipeBox.Controllers
       var thisRecipe = _db.Recipes
           .Include(recipe => recipe.JoinEntities)
           .ThenInclude(join => join.Category)
-          .FirstOrDefault(recipe. => recipe.Recipe.Id == id);
-      return View(thisRecipe.);
+          .FirstOrDefault(recipe => recipe.RecipeId == id);
+      return View(thisRecipe);
     }
 
     public ActionResult Edit(int id)
     {
-      var thisRecipe = _db.Recipes.FirstOrDefault(recipe. => recipe.RecipeId == id);
+      var thisRecipe = _db.Recipes.FirstOrDefault(recipe => recipe.RecipeId == id);
       ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
       return View(thisRecipe);
     }
 
     [HttpPost]
-    public ActionResult Edit(Recipe recipe., int CategoryId)
+    public ActionResult Edit(Recipe recipe, int CategoryId)
     {
       if (CategoryId != 0)
       {
