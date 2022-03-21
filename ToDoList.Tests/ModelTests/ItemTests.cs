@@ -1,10 +1,10 @@
 // using MySql.Data.MySqlClient;
 // using Microsoft.VisualStudio.TestTools.UnitTesting;
 // using System.Collections.Generic;
-// using ToDoList.Models;
+// using RecipeBox.Models;
 // using System;
 
-// namespace ToDoList.Tests
+// namespace RecipeBox.Tests
 // {
 
 //   [TestClass]
