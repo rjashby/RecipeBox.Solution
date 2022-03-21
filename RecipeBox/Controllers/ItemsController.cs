@@ -58,42 +58,42 @@ namespace RecipeBox.Controllers
       var thisRecipe = _db.Recipes
           .Include(recipe => recipe.JoinEntities)
           .ThenInclude(join => join.Category)
-          .FirstOrDefault(recipe. => recipe..Recipe.Id == id);
+          .FirstOrDefault(recipe. => recipe.Recipe.Id == id);
       return View(thisRecipe.);
     }
 
     public ActionResult Edit(int id)
     {
-      var thisRecipe = _db.Recipes.FirstOrDefault(recipe. => recipe..RecipeId == id);
+      var thisRecipe = _db.Recipes.FirstOrDefault(recipe. => recipe.RecipeId == id);
       ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
       return View(thisRecipe);
     }
 
     [HttpPost]
-    public ActionResult Edit(Recipe item, int CategoryId)
+    public ActionResult Edit(Recipe recipe., int CategoryId)
     {
       if (CategoryId != 0)
       {
-        _db.CategoryRecipe.Add(new CategoryRecipe() { CategoryId = CategoryId, ItemId = item.ItemId });
+        _db.CategoryRecipe.Add(new CategoryRecipe() { CategoryId = CategoryId, RecipeId = recipe.RecipeId });
       }
-      _db.Entry(item).State = EntityState.Modified;
+      _db.Entry(recipe).State = EntityState.Modified;
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
 
     public ActionResult AddCategory(int id)
     {
-      var thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
+      var thisRecipe = _db.Recipes.FirstOrDefault(recipe => recipe.RecipeId == id);
       ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
-      return View(thisItem);
+      return View(thisRecipe);
     }
 
     [HttpPost]
-    public ActionResult AddCategory(Item item, int CategoryId)
+    public ActionResult AddCategory(Recipe recipe, int CategoryId)
     {
       if (CategoryId != 0)
       {
-      _db.CategoryRecipe.Add(new CategoryRecipe() { CategoryId = CategoryId, ItemId = item.ItemId });
+      _db.CategoryRecipe.Add(new CategoryRecipe() { CategoryId = CategoryId, RecipeId = recipe.RecipeId });
       }
       _db.SaveChanges();
       return RedirectToAction("Index");
@@ -101,15 +101,15 @@ namespace RecipeBox.Controllers
 
     public ActionResult Delete(int id)
     {
-      var thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
-      return View(thisItem);
+      var thisRecipe = _db.Recipes.FirstOrDefault(recipe => recipe.RecipeId == id);
+      return View(thisRecipe);
     }
 
     [HttpPost, ActionName("Delete")]
     public ActionResult DeleteConfirmed(int id)
     {
-      var thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
-      _db.Items.Remove(thisItem);
+      var thisRecipe = _db.Recipes.FirstOrDefault(recipe => recipe.RecipeId == id);
+      _db.Recipes.Remove(thisRecipe);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
