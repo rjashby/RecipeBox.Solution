@@ -2,18 +2,18 @@
   Layout = "_Layout";
 }
 
-@model RecipeBox.Models.Item
+@model RecipeBox.Models.Recipe
 
-<h4>Add a new task</h4>
+<h4>Add a new a recipe</h4>
 
 @using (Html.BeginForm())
 {
-  @Html.LabelFor(model => model.Description)
-  @Html.TextBoxFor(model => model.Description)
+  @Html.LabelFor(model => model.Title)
+  @Html.TextBoxFor(model => model.Title)
 
   @Html.Label("Select category")
   @Html.DropDownList("CategoryId")
 
-  <input type="submit" value="Add new item" class="btn btn-default" />
+  <input type="submit" value="Add new recipe" class="btn btn-default" />
 }
-<p>@Html.ActionLink("Show all items", "Index")</p>
+<p>@Html.ActionLink("Show all recipes", "Index")</p>
