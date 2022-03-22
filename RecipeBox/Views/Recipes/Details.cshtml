@@ -29,7 +29,7 @@ else
   </ul>
 }
 
-@if(ViewBag.ingreds.Count == 0)
+@if(ViewBag.recIngreds.Count == 0)
 {
   <p>This Recipe doesn't have any ingredients yet</p>
 }
@@ -37,9 +37,11 @@ else
 {
   <h4>Ingredients for this Recipe</h4>
   <ul>
-    @foreach(var ing in ViewBag.ingreds)
+    @foreach(var recIng in ViewBag.recIngreds)
     {
-      <li>@ing.Name</li>
+      <li>@recIng.Ingredient.Name -- @recIng.Amount</li>
+
+
       @* @using (Html.BeginForm("DeleteIngredient", "Recipes"))
       {
         @Html.Hidden("ingId", @ing.IngredientId)

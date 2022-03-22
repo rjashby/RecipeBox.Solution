@@ -60,10 +60,16 @@ namespace RecipeBox.Controllers
           .ThenInclude(join => join.Category)
           .FirstOrDefault(recipe => recipe.RecipeId == id);
 
-      ViewBag.ingreds = _db.RecipeIngredient
-                          .Where( recIng => recIng.RecipeId == id)
-                          .Select(ing => ing.Ingredient)
-                          .ToList(); 
+
+      //we want 
+      ViewBag.recIngreds = _db.RecipeIngredient
+                            .Include(ing => ing.Ingredient)
+                            .ToList();
+                          
+      // ViewBag.amounts = _db.RecipeIngredient
+      //                     .Where( recIng = recIng.RecipeId == id)
+      //                     .ToList();
+
       return View(thisRecipe);
     }
 
@@ -171,7 +177,7 @@ namespace RecipeBox.Controllers
     {
       if (IngredientId != 0)
       {
-        _db.RecipeIngredient.Add(new RecipeIngredient() { IngredientId = IngredientId, RecipeId = recipe.RecipeId, Amount = Amount });
+        _db.RecipeIngredient.Add(new RecipeIngredient() { IngredientId = IngredientId, RecipeId = recipe.RecipeId, Amount = Amount});
         _db.SaveChanges();
       }
 
