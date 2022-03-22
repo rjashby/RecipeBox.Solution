@@ -40,7 +40,13 @@ else
     @foreach(var recIng in ViewBag.recIngreds)
     {
       <li>@recIng.Ingredient.Name -- @recIng.Amount</li>
-
+      <p>@Html.ActionLink("Edit Amount", "EditAmount", new { id = recIng.RecipeIngredientId })</p>
+      @* @using (Html.BeginForm("EditAmount", "Recipes"))
+      {
+        @Html.HiddenFor(recIng => recIng.RecipeIngredientId)
+        @Html.Hidden("id", @recIng.RecipeIngredientId)
+        <input type="submit" value="Save"/>
+      } *@
 
       @* @using (Html.BeginForm("DeleteIngredient", "Recipes"))
       {

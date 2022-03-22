@@ -45,6 +45,9 @@ namespace RecipeBox.Controllers
     {
       var thisIngredient = _db.Ingredients
       .FirstOrDefault(ingredient => ingredient.IngredientId == id);
+
+      ViewBag.ingAmount = _db.RecipeIngredient
+                            .FirstOrDefault(j => j.IngredientId == id);
       return View(thisIngredient);
     }
 

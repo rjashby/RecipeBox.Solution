@@ -4,14 +4,14 @@
 
 @model RecipeBox.Models.RecipeIngredient
 
-<h4>Edit the amount of this ingredient: @Html.DisplayFor(model => model.Name)</h4>
+<h4>Edit the amount of this ingredient: @Html.DisplayFor(model => model.Ingredient.Name)</h4>
 
 @using (Html.BeginForm())
 {
   @Html.HiddenFor(model => model.RecipeIngredientId)
 
-  @Html.LabelFor(RecipeIngredient.Amount) // EDIT what's in parens
-  @Html.EditorFor(RecipeIngredient.Amount)  // EDIT what's in parens
+  @Html.Label("Rewrite amount") 
+  @Html.TextBox("amount")
 
   <input type="submit" value="Save" />
 }

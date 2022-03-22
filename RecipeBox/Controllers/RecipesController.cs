@@ -183,5 +183,24 @@ namespace RecipeBox.Controllers
 
       return RedirectToAction("Details", new {id = recipe.RecipeId});
     }
+
+    public ActionResult EditAmount(int id)
+    {
+      var thisRecipeIngredient = _db.RecipeIngredient
+                                  .Include(ing => ing.Ingredient)
+                                  .FirstOrDefault( m => m.RecipeIngredientId == id);
+      return View(thisRecipeIngredient);
+    }
+
+    [HttpPost]
+    public ActionResult EditAmount(string amount, int id)
+    {
+      var recipeingredient =_db.RecipeIngredient.FirstOrDefault( s => s.RecipeIngredientId == id);
+      recipeingredient.Amount = amount; 
+      _db.Entry(recipeingredient).State = EntityState.Modified;
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+      // return RedirectToAction("Details", new {id = recipe.RecipeId });
+    }
   }
 }
