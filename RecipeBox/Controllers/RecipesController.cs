@@ -59,6 +59,11 @@ namespace RecipeBox.Controllers
           .Include(recipe => recipe.JoinEntities)
           .ThenInclude(join => join.Category)
           .FirstOrDefault(recipe => recipe.RecipeId == id);
+
+      ViewBag.ingreds = _db.RecipeIngredient
+                          .Where( recIng => recIng.RecipeId == id)
+                          .Select(ing => ing.Ingredient)
+                          .ToList(); 
       return View(thisRecipe);
     }
 
@@ -136,6 +141,41 @@ namespace RecipeBox.Controllers
       _db.CategoryRecipe.Remove(joinEntry);
       _db.SaveChanges();
       return RedirectToAction("Index");
+    }
+
+
+    public ActionResult AddIngredient(int id)
+    {
+      var thisRecipe = _db.Recipes.FirstOrDefault(recipe => recipe.RecipeId == id);
+      var thisRecipeIngredient = _db.RecipeIngredient.Where(recIng => recIng.RecipeId == id);
+      
+      List<Ingredient> ingredients = _db.Ingredients.ToList();
+      List<Ingredient> ingredients2 = _db.Ingredients.ToList();
+
+      foreach (RecipeIngredient recipeIngredient in thisRecipeIngredient)
+      {
+        foreach(Ingredient ingredient in ingredients)
+        {
+          if (ingredient.IngredientId == recipeIngredient.IngredientId)
+          {
+            ingredients2.Remove(ingredient);
+          }
+        }
+      }
+      ViewBag.IngredientId = new SelectList(ingredients2, "IngredientId", "Name");
+      return View(thisRecipe);
+    }
+
+    [HttpPost]
+    public ActionResult AddIngredient(Recipe recipe, int IngredientId, string Amount)
+    {
+      if (IngredientId != 0)
+      {
+        _db.RecipeIngredient.Add(new RecipeIngredient() { IngredientId = IngredientId, RecipeId = recipe.RecipeId, Amount = Amount });
+        _db.SaveChanges();
+      }
+
+      return RedirectToAction("Details", new {id = recipe.RecipeId});
     }
   }
 }

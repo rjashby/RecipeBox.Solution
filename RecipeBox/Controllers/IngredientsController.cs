@@ -37,8 +37,7 @@ namespace RecipeBox.Controllers
     public ActionResult Details(int id)
     {
       var thisIngredient = _db.Ingredients
-          .Include(ingredient => ingredient.Name)
-          .FirstOrDefault(ingredient => ingredient.IngredientId == id);
+        .FirstOrDefault(ingredient => ingredient.IngredientId == id);
       return View(thisIngredient);
     }
 
