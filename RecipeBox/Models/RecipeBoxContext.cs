@@ -19,15 +19,5 @@ namespace RecipeBox.Models
     {
       optionsBuilder.UseLazyLoadingProxies();
     }
-
-    // protected override void OnModelCreating(ModelBuilder modelBuilder)
-    // {
-    //   // Configure the value converter for the Animal
-    //   modelBuilder.Entity<Recipe>()
-    //     .Property(x => x.Ingredients)
-    //     .HasConversion(new ValueConverter<List<string>, string>(
-    //       v => JsonConvert.SerializeObject(v), // Convert to string for persistence
-    //       v => JsonConvert.DeserializeObject<List<string>>(v))); // Convert to List<String> for use
-    // }
   }
 }

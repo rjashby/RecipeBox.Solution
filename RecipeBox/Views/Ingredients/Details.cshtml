@@ -7,11 +7,7 @@
 
 <h2>Ingredient Details</h2>
 <hr />
-<h3>@Html.DisplayNameFor(model => model.Title): @Html.DisplayFor(model => model.Title)</h3>
-<h3>Beer Name: @Html.ActionLink($"{Model.Recipe.Title}", "Details", "Beers", new { id = Model.Recipe.RecipeId })</h3>
-
-<h3>Ingredient: @Html.DisplayFor(model => model.Name)</h3>
-
+<h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
 <p>@Html.ActionLink("Back to Ingredient List", "Index")</p>
 <p>@Html.ActionLink("Edit Ingredient", "Edit", new { id = Model.IngredientId })</p>
 <p>@Html.ActionLink("Delete Ingredient", "Delete", new { id = Model.IngredientId })</p>

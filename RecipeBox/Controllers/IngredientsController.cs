@@ -23,15 +23,13 @@ namespace RecipeBox.Controllers
 
     public ActionResult Create()
     {
-      ViewBag.BeerId = new SelectList(_db.Beers, "BeerId", "Name");
-      ViewBag.DrinkerId = new SelectList(_db.Drinkers, "DrinkerId", "Name");
       return View();
     }
 
     [HttpPost]
-    public ActionResult Create(Ingredient Ingredient, int BeerId, int DrinkerId, string Title, string Description)
+    public ActionResult Create(Ingredient ingredient, string Name)
     {
-      _db.Ingredients.Add(Ingredient);
+      _db.Ingredients.Add(ingredient);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
@@ -39,37 +37,36 @@ namespace RecipeBox.Controllers
     public ActionResult Details(int id)
     {
       var thisIngredient = _db.Ingredients
-          .Include(Ingredient => Ingredient.Drinker)
-          .Include(Ingredient => Ingredient.Beer)
-          .FirstOrDefault(Ingredient => Ingredient.IngredientId == id);
+          .Include(ingredient => ingredient.Name)
+          .FirstOrDefault(ingredient => ingredient.IngredientId == id);
       return View(thisIngredient);
     }
 
     public ActionResult Edit(int id)
     {
       var thisIngredient = _db.Ingredients
-      .FirstOrDefault(Ingredient => Ingredient.IngredientId == id);
+      .FirstOrDefault(ingredient => ingredient.IngredientId == id);
       return View(thisIngredient);
     }
 
     [HttpPost]
-    public ActionResult Edit(Ingredient Ingredient)
+    public ActionResult Edit(Ingredient ingredient)
     {
-      _db.Entry(Ingredient).State = EntityState.Modified;
+      _db.Entry(ingredient).State = EntityState.Modified;
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
 
     public ActionResult Delete(int id)
     {
-      var thisIngredient = _db.Ingredients.FirstOrDefault(Ingredient => Ingredient.IngredientId == id);
+      var thisIngredient = _db.Ingredients.FirstOrDefault(ingredient => ingredient.IngredientId == id);
       return View(thisIngredient);
     }
 
     [HttpPost, ActionName("Delete")]
     public ActionResult DeleteConfirmed(int id)
     {
-      var thisIngredient = _db.Ingredients.FirstOrDefault(Ingredient => Ingredient.IngredientId == id);
+      var thisIngredient = _db.Ingredients.FirstOrDefault(ingredient => ingredient.IngredientId == id);
       _db.Ingredients.Remove(thisIngredient);
       _db.SaveChanges();
       return RedirectToAction("Index");

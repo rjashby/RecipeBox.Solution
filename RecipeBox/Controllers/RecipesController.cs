@@ -84,7 +84,22 @@ namespace RecipeBox.Controllers
     public ActionResult AddCategory(int id)
     {
       var thisRecipe = _db.Recipes.FirstOrDefault(recipe => recipe.RecipeId == id);
-      ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
+      var thisCategoryRecipe = _db.CategoryRecipe.Where(categoryrecipe => categoryrecipe.RecipeId == id);
+      
+      List<Category> categories = _db.Categories.ToList();
+      List<Category> categories2 = _db.Categories.ToList();
+
+      foreach (CategoryRecipe categoryRecipe in thisCategoryRecipe)
+      {
+        foreach(Category category in categories)
+        {
+          if (category.CategoryId == categoryRecipe.CategoryId)
+          {
+            categories2.Remove(category);
+          }
+        }
+      }
+      ViewBag.CategoryId = new SelectList(categories2, "CategoryId", "Name");
       return View(thisRecipe);
     }
 
